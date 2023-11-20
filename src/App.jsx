@@ -1,4 +1,7 @@
 import TaskComponent from "./components/task.component"
+import Categoria from "./components/categoria"
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 function App() {
 
   //un ejmplo de conjunto de listas y notas
@@ -51,10 +54,27 @@ function App() {
   }
 
   return (
-    <>
-      <TaskComponent taskData={taskData} />
-      <TaskComponent taskData={taskData} />
-    </>
+    <div>
+      <Box sx={{ flexGrow: 1 }}>
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <Categoria></Categoria>
+          </Grid>
+          <Grid item xs={12}>
+            <TaskComponent taskData={taskData} />
+          </Grid>
+          <Grid item xs={12}>
+            <TaskComponent taskData={taskData} />
+          </Grid>
+          <Grid item xs={12}>
+            <TaskComponent taskData={taskData} />
+          </Grid>
+          
+        </Grid>
+      </Box>
+
+
+    </div>
   )
 }
 
