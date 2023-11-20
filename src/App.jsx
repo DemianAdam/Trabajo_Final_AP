@@ -50,11 +50,9 @@ function App() {
     label: '#F8BD1C'
   }
 
-
-
-
   return (
     <>
+      <TaskComponent taskData={taskData} />
       <TaskComponent taskData={taskData} />
     </>
   )
