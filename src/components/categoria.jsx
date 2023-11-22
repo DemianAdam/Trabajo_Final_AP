@@ -1,7 +1,8 @@
-import { WrapText } from "@mui/icons-material";
+import { MoreHoriz, WrapText } from "@mui/icons-material";
 import { Typography } from "@mui/material";
+import React, { useState } from "react";
 import IconButton from "@mui/material/IconButton";
-import React from "react";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 export default function Categoria() {
   //  const [categoriaTitle, setCategoriaTitle] = useState(props.categoriaTitle)
