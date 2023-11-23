@@ -6,6 +6,16 @@ import TaskComponent from "./components/task.component";
 import TaskForm from "./components/TaskForm";
 
 function App() {
+  // Const para crear el array vacio que contendra las notas
+  const arrayList = () => {
+    const [notas, setNotas] = useState([])
+  }
+
+  // Const que agrega las 'newNota' dentro del arrayList, actualizandolo con cada nota agregada
+  const addNota = (newNota) => {
+    setNotas([...notas, newNota])
+  }
+
   //un ejmplo de conjunto de listas y notas
 
   const tasksList = [
