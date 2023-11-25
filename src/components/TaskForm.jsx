@@ -1,4 +1,17 @@
 import { Box, Button, InputBase, InputLabel, Stack } from "@mui/material";
+import React from "react";
+
+const SvgComponent = React.memo(() => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="60"
+    height="8"
+    viewBox="0 0 60 8"
+    fill="none"
+  >
+    <rect width="60" height="8" rx="4" fill="#FF3838" />
+  </svg>
+));
 
 export default function TaskForm() {
   return (
@@ -41,15 +54,7 @@ export default function TaskForm() {
           className="rounded-[5px] border border-white border-opacity-20 bg-zinc-900 bg-opacity-50 px-3  text-[13px] font-light leading-[19px] text-inherit"
         />
       </Stack>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="60"
-        height="8"
-        viewBox="0 0 60 8"
-        fill="none"
-      >
-        <rect width="60" height="8" rx="4" fill="#FF3838" />
-      </svg>
+      <SvgComponent />
       <Stack direction="row" spacing={1.5} useFlexGap>
         <Button
           variant="contained"

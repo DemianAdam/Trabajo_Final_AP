@@ -1,21 +1,27 @@
 import React from 'react';
-import { List, ListItem, Typography, Divider } from '@mui/material';
+import { List, ListItem, Typography, Divider, Grid, Box } from '@mui/material';
+import TaskComponent from './task.component';
+import Categoria from './categoria';
+import TaskForm from './TaskForm';
 
-const TaskList = ({ category }) => {
+const TaskList = ({ taskListData }) => {
   return (
-    <div className="mt-4">
-      <Typography variant="h6">{category.title}</Typography>
-      <Divider className="my-2" />
-      <List>
-        {category.tasks.map((task, index) => (
-          <ListItem key={index}>
-            <Typography variant="body1">
-              <strong>{task.title}:</strong> {task.body}
-            </Typography>
-          </ListItem>
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid container spacing={1}>
+        <Grid item xs={12}>
+          <Categoria title={taskListData.title} />
+        </Grid>
+        <Divider className="my-2" />
+        {taskListData.tasks.map((task) => (
+          <Grid item xs={12} key={task.id}>
+            <TaskComponent taskData={task} />
+          </Grid>
         ))}
-      </List>
-    </div>
+        <Grid item xs={12}>
+          <TaskForm />
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
 
