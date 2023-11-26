@@ -1,27 +1,33 @@
 import React from 'react';
 import { List, ListItem, Typography, Divider, Grid, Box } from '@mui/material';
-import TaskComponent from './task.component';
-import Categoria from './categoria';
-import TaskForm from './TaskForm';
+import TaskComponent from './task';
+import TaskForm from './taskForm';
+import { WrapText } from "@mui/icons-material";
+import IconButton from "@mui/material/IconButton";
+
 
 const TaskList = ({ taskListData }) => {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={1}>
-        <Grid item xs={12}>
-          <Categoria title={taskListData.title} />
-        </Grid>
-        <Divider className="my-2" />
+    <div className='pr-4'>
+      <div className='pb-4'>
+        <div className="flex w-[22.625rem] items-center justify-between rounded-lg border border-white/20 bg-[#18191B80]/50 pb-1 pl-4 pr-3 pt-1 text-white">
+          <Typography className="py-1 font-semibold">
+            {taskListData.title}
+          </Typography>
+          <IconButton color="primary">
+            <WrapText></WrapText>
+          </IconButton>
+        </div>
+      </div>
+      <div >
         {taskListData.tasks.map((task) => (
-          <Grid item xs={12} key={task.id}>
-            <TaskComponent taskData={task} />
+          <Grid key={task.id} className='pb-4'>
+            <TaskComponent task={task} />
           </Grid>
         ))}
-        <Grid item xs={12}>
-          <TaskForm />
-        </Grid>
-      </Grid>
-    </Box>
+      </div>
+      <TaskForm />
+    </div>
   );
 };
 

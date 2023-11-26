@@ -1,5 +1,5 @@
-import { Box, Button, InputBase, InputLabel, Stack } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
+import { Box, Button, InputBase, InputLabel, Stack, Select, MenuItem } from "@mui/material";
 
 const SvgComponent = React.memo(() => (
   <svg
@@ -13,46 +13,120 @@ const SvgComponent = React.memo(() => (
   </svg>
 ));
 
+const data = {
+  id: 0,
+  title: "momo",
+  body: "qui dolorem ipsum, quia dolor sit amet consectetur adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem",
+  label: "#F8BD1C",
+}
+
+const formFieldConfig = {
+  id: { label: "ID", type: "hidden" },
+  title: { label: "Titulo", type: "text" },
+  body: { label: "Cuerpo", type: "textarea" },
+  label: { label: "Etiqueta", type: "select", options: ["#F8BD1C", "#FF3838", "#F8F8F8"] },
+}
+
 export default function TaskForm() {
+  const [formData, setFormData] = useState(data);
+
+  const updateFormData = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const submitFormData = (e) => {
+    e.preventDefault();
+    console.log(formData)
+  };
+
+  const renderFormField = (key, field, value, updateFormData) => {
+    if (!field) return null;
+    switch (field.type) {
+      case "hidden":
+        return (
+          <input
+            type="hidden"
+            name={key}
+            value={value}
+          />
+        );
+      case "text":
+        return (
+          <>
+            <InputLabel
+              htmlFor="titulo-task"
+              className="w-[287px] text-[13px] font-light leading-[19px] text-inherit pb-2"
+            >
+              {field.label}
+            </InputLabel>
+            <InputBase
+              type="text"
+              id={key}
+              name={key}
+              value={value}
+              onChange={updateFormData}
+              fullWidth
+              slotProps={{ input: { className: "py-1.5" } }}
+              className="h-[30px] rounded-[5px] border border-white border-opacity-20 bg-zinc-900 bg-opacity-50 px-3 text-[13px] font-light leading-[19px] text-inherit"
+            />
+          </>
+        );
+      case "textarea":
+        return (
+          <>
+            <InputLabel
+              htmlFor="titulo-task"
+              className="w-[287px] text-[13px] font-light leading-[19px] text-inherit pb-2"
+            >
+              {field.label}
+            </InputLabel>
+            <InputBase
+              id={key}
+              name={key}
+              value={value}
+              onChange={updateFormData}
+              multiline
+              minRows={3}
+              fullWidth
+              className="rounded-[5px] border border-white border-opacity-20 bg-zinc-900 bg-opacity-50 px-3  text-[13px] font-light leading-[19px] text-inherit py-1.5"
+            />
+          </>
+        );
+      case "select":
+        return (
+          <Select
+            id={key}
+            name={key}
+            value={value}
+            onChange={updateFormData}
+          >
+            {field.options.map((option) => (
+              <MenuItem key={option} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </Select>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <Box
       component="form"
-      onSubmit={(e) => e.preventDefault()}
+      onSubmit={submitFormData}
       className="flex w-[22.625rem] flex-col items-start gap-5 rounded-lg border border-white/20 bg-[#18191B80]/50 px-6 py-4 text-white"
     >
       <Stack direction="column" spacing={1.25} useFlexGap>
-        <InputLabel
-          htmlFor="titulo-task"
-          className="w-[287px] text-[13px] font-light leading-[19px] text-inherit"
-        >
-          Titulo
-        </InputLabel>
-        <InputBase
-          type="text"
-          id="titulo-task"
-          placeholder="Lorem ipsum dolor sit"
-          fullWidth
-          slotProps={{ input: { className: "py-1.5" } }}
-          className="h-[30px] rounded-[5px] border border-white border-opacity-20 bg-zinc-900 bg-opacity-50 px-3 text-[13px] font-light leading-[19px] text-inherit"
-        />
-      </Stack>
-      <Stack direction="column" spacing={1.25} useFlexGap>
-        <InputLabel
-          htmlFor="cuerpo-task"
-          className="w-[287px] text-[13px] font-light leading-[19px] text-inherit"
-        >
-          Cuerpo
-        </InputLabel>
-        <InputBase
-          type="text"
-          id="cuerpo-task"
-          multiline
-          minRows={3}
-          fullWidth
-          placeholder="Lorem ipsum dolor sit amet consectetur, adipiscing elit auctor penatibus volutpat posuere, sodales praesent libero mus"
-          slotProps={{ input: { className: "py-1.5" } }}
-          className="rounded-[5px] border border-white border-opacity-20 bg-zinc-900 bg-opacity-50 px-3  text-[13px] font-light leading-[19px] text-inherit"
-        />
+        {Object.keys(formData).map((key) => {
+          return (
+            <div key={key}>
+              {renderFormField(key, formFieldConfig[key], formData[key], updateFormData)}
+            </div>
+          )
+        })}
       </Stack>
       <SvgComponent />
       <Stack direction="row" spacing={1.5} useFlexGap>

@@ -1,9 +1,8 @@
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
 
-export default function TaskComponent(props) {
-  const [taskData, settaskData] = useState(props.taskData);
+
+export default function TaskComponent({ task }) {
 
   return (
     <div className="max-h-72  w-[22.625rem] rounded-lg border border-white/20 bg-[#18191B80]/50 text-white">
@@ -16,12 +15,12 @@ export default function TaskComponent(props) {
           fill="none"
           className="my-2"
         >
-          <rect width="60" height="8" rx="4" fill={taskData.label} />
+          <rect width="60" height="8" rx="4" fill={task.label} />
         </svg>
         <Typography variant="h5" className="pb-2">
-          {taskData.title}
+          {task.title}
         </Typography>
-        <Typography>{taskData.body}</Typography>
+        <Typography>{task.body}</Typography>
       </CardContent>
     </div>
   );
