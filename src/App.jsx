@@ -1,3 +1,5 @@
+import 'overlayscrollbars/overlayscrollbars.css';
+import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 import Grid from "@mui/material/Grid";
 import TaskList from "./components/taskList";
 import { useState } from "react";
@@ -148,15 +150,17 @@ function App() {
   ]
 
   return (
-    <div className="h-screen flex overflow-auto p-10">
-      {
-        tasksList.map((taskList) => (
-          <Grid item xs={1} sm={6} md={4} lg={3} key={taskList.id}>
-            <TaskList taskListData={taskList} />
-          </Grid>
-        ))
-      }
-    </div>
+    <OverlayScrollbarsComponent className="h-screen p-10">
+      <div className='flex'>
+        {
+          tasksList.map((taskList) => (
+            <Grid item xs={1} sm={6} md={4} lg={3} key={taskList.id}>
+              <TaskList taskListData={taskList} />
+            </Grid>
+          ))
+        }
+      </div>
+    </OverlayScrollbarsComponent>
   );
 }
 
