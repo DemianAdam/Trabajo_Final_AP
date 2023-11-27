@@ -7,9 +7,10 @@ import { useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import { useSnackbar } from 'notistack';
 
-const TaskList = ({ taskListData, updateTasksList }) => {
+const TaskList = ({ taskListData, updateTasksList, removeTaskList }) => {
   const [isCreatingTask, setIsCreatingTask] = useState(false);
-  const {enqueueSnackbar} = useSnackbar();
+  const [isEditingTaskList, setIsEditingTaskList] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   const taskConfig = {
     id: 0,
@@ -33,18 +34,45 @@ const TaskList = ({ taskListData, updateTasksList }) => {
     enqueueSnackbar('Tarea actualizada', { variant: 'info' });
   }
 
+  const editTaskList = (taskList) => {
+    const newTaskList = { ...taskListData, title: taskList.title };
+    updateTasksList(newTaskList);
+    enqueueSnackbar('Lista actualizada', { variant: 'info' });
+    setIsEditingTaskList(false);
+  }
+
+  const deleteTaskList = () => {
+    removeTaskList(taskListData.id);
+    enqueueSnackbar('Lista eliminada', { variant: 'error' });
+    setIsEditingTaskList(false);
+  }
+
+
   return (
     <div className='pr-4'>
-      <div className='pb-4'>
-        <div className="flex w-[22.625rem] items-center justify-between rounded-lg border border-white/20 bg-[#18191B80]/50 pb-1 pl-4 pr-3 pt-1 text-white">
-          <Typography className="py-1 font-semibold">
-            {taskListData.title}
-          </Typography>
-          <IconButton color="primary">
-            <MoreHorizIcon></MoreHorizIcon>
-          </IconButton>
+      {isEditingTaskList ? (
+        <div className='pb-4'>
+          <TaskForm
+            data={taskListData}
+            submitFormData={editTaskList}
+            submitText='Guardar'
+            cancelForm={() => setIsEditingTaskList(false)}
+            isEditingForm={"true"}
+            deleteForm={deleteTaskList}/>
         </div>
-      </div>
+      ) : (
+        <div className='pb-4'>
+          <div className="flex w-[22.625rem] items-center justify-between rounded-lg border border-white/20 bg-[#18191B80]/50 pb-1 pl-4 pr-3 pt-1 text-white">
+            <Typography className="py-1 font-semibold">
+              {taskListData.title}
+            </Typography>
+            <IconButton color="primary" onClick={() => setIsEditingTaskList(true)}>
+              <MoreHorizIcon></MoreHorizIcon>
+            </IconButton>
+          </div>
+        </div>
+
+      )}
       <div >
         {
           taskListData.tasks.map((task) => (

@@ -127,7 +127,6 @@ function App() {
   const [data, setData] = useState([]);
 
   const [isCreatingTaskList, setIsCreatingTaskList] = useState(false);
-  const [isEditingTaskList, setIsEditingTaskList] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
 
   const taskListConfig = {
@@ -146,10 +145,6 @@ function App() {
     setData(data.filter((item) => item.id !== id));
   }
 
-  const editTaskList = (editedData) => {
-    setData(data.map((item) => item.id === editedData.id ? editedData : null));
-  }
-
   const updateTasksList = (updatedTaskList) => {
     const updatedData = data.map((item) => {
       return item.id === updatedTaskList.id ? updatedTaskList : item
@@ -158,7 +153,6 @@ function App() {
     setData(updatedData);
     localStorage.setItem('data', JSON.stringify(updatedData));
   };
-
 
   useEffect(() => {
     if (count) {
@@ -180,7 +174,6 @@ function App() {
 
   return (
     <OverlayScrollbarsComponent className="h-screen p-10">
-
       <div className='flex flex-row'>
         {
           data ? (
@@ -188,7 +181,7 @@ function App() {
               {
                 data.map((taskList) => (
                   <Grid item xs={1} sm={6} md={4} lg={3} key={taskList.id}>
-                    <TaskList taskListData={taskList} updateTasksList={updateTasksList} />
+                    <TaskList taskListData={taskList} updateTasksList={updateTasksList} removeTaskList={removeTaskList} />
                   </Grid>
                 ))
               }

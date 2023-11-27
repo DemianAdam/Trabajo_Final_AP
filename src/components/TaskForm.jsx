@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Button, InputBase, InputLabel, Stack, Select, MenuItem } from "@mui/material";
-import { styled } from '@mui/material/styles';
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from "@mui/material/IconButton";
 
 const dataExample = {
   id: 0,
@@ -17,7 +17,7 @@ const formFieldConfig = {
   label: { label: "Etiqueta", type: "select", options: ["#F8BD1C", "#FF3838", "#F8F8F8"] },
 }
 
-export default function TaskForm({ data, submitFormData, cancelForm, submitText = 'Añadir' }) {
+export default function TaskForm({ data, submitFormData, cancelForm, submitText = 'Añadir', deleteForm, isEditingForm = false }) {
   const [formData, setFormData] = useState(data);
 
   const updateFormData = (e) => {
@@ -95,18 +95,11 @@ export default function TaskForm({ data, submitFormData, cancelForm, submitText 
             value={value}
             onChange={updateFormData}
             className="h-[30px] rounded-[5px] border border-white border-opacity-20 bg-zinc-900 bg-opacity-50 px-3 text-[13px] font-light leading-[19px] text-inherit"
-            sx={{
-              '&:focus': {
-                borderColor: 'red',
-              }
-            }}
           >
             {field.options.map((option) => (
               <MenuItem
                 key={option}
                 value={option}
-                classes={{ root: 'bg-zinc-900' }}
-                className="bg-zinc-900"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -143,24 +136,37 @@ export default function TaskForm({ data, submitFormData, cancelForm, submitText 
         })}
       </Stack>
       <Stack direction="row" spacing={1.5} useFlexGap>
-        <Button
-          variant="contained"
-          disableElevation
-          size="small"
-          className="rounded-[5px] bg-blue-600 text-white"
-          type="submit"
-        >
-          {submitText}
-        </Button>
-        <Button
-          variant="outlined"
-          color="error"
-          size="small"
-          className="rounded-[5px]"
-          onClick={cancelForm}
-        >
-          Cancelar
-        </Button>
+        <div className="flex justify-between w-[19rem] items-center">
+          <div >
+            <Button
+              variant="contained"
+              disableElevation
+              size="small"
+              className="rounded-[5px] bg-blue-600 text-white"
+              type="submit"
+            >
+              {submitText}
+            </Button>
+            <Button
+              variant="outlined"
+              color="error"
+              size="small"
+              className="rounded-[5px]"
+              onClick={cancelForm}
+            >
+              Cancelar
+            </Button>
+          </div>
+          {
+            isEditingForm ? (
+              <IconButton color="error" onClick={deleteForm}>
+                <DeleteIcon ></DeleteIcon>
+              </IconButton>
+            ) : (
+              null
+            )
+          }
+        </div>
       </Stack>
     </Box>
   );
