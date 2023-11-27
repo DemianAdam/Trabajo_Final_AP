@@ -15,7 +15,7 @@ const formFieldConfig = {
   label: { label: "Etiqueta", type: "select", options: ["#F8BD1C", "#FF3838", "#F8F8F8"] },
 }
 
-export default function TaskForm({ data, submitFormData, cancelForm }) {
+export default function TaskForm({ data, submitFormData, cancelForm, submitText = 'Añadir' }) {
   const [formData, setFormData] = useState(data);
 
   const updateFormData = (e) => {
@@ -102,7 +102,7 @@ export default function TaskForm({ data, submitFormData, cancelForm }) {
               <MenuItem
                 key={option}
                 value={option}
-                className="bg-zinc-900" 
+                className="bg-zinc-900"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -146,7 +146,7 @@ export default function TaskForm({ data, submitFormData, cancelForm }) {
           className="rounded-[5px] bg-blue-600"
           type="submit"
         >
-          Añadir
+          {submitText}
         </Button>
         <Button
           variant="outlined"

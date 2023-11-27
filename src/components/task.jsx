@@ -27,6 +27,7 @@ export default function Task({ task, updateTask }) {
           data={task} 
           submitFormData={submitFormData}
           cancelForm={() => setIsEditing(false)}
+          submitText='Guardar'
            />
         ) : (
           <div className="max-h-72  w-[22.625rem] rounded-lg border border-white/20 bg-[#18191B80]/50 text-white">
