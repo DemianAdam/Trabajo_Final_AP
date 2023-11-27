@@ -6,7 +6,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import TaskForm from './taskForm';
 import { useState, useEffect } from "react";
 
-export default function Task({ task }) {
+export default function Task({ task, updateTask }) {
   const [isEditing, setIsEditing] = useState(false);
 
   const editTask = () => {
@@ -14,8 +14,10 @@ export default function Task({ task }) {
   }
 
   const submitFormData = (editedTask) => {
+    updateTask(editedTask);
     setIsEditing(false);
   }
+
 
   return (
     <>

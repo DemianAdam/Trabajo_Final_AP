@@ -164,6 +164,7 @@ function App() {
     }
     );
     setData(updatedData);
+    console.log(updatedData);
   };
 
   return (

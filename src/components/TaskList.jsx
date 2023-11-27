@@ -19,7 +19,13 @@ const TaskList = ({ taskListData, updateTasksList }) => {
   const addTask = (task) => {
     const newTask = { ...task, id: taskListData.tasks.length };
     const newTasks = { ...taskListData, tasks: [...taskListData.tasks, newTask] };
+    updateTasksList(newTasks);
     setIsCreatingTask(false)
+  }
+
+  const updateTask = (task) => {
+    taskListData.tasks[task.id] = task;
+    const newTasks = { ...taskListData, tasks: [...taskListData.tasks] };
     updateTasksList(newTasks);
   }
 
@@ -39,7 +45,7 @@ const TaskList = ({ taskListData, updateTasksList }) => {
         {
           taskListData.tasks.map((task) => (
             <Grid key={task.id} className='pb-4'>
-              <Task task={task} />
+              <Task task={task} updateTask={updateTask} />
             </Grid>
           ))}
       </div>
