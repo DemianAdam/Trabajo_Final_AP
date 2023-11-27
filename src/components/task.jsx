@@ -8,20 +8,14 @@ import { useState, useEffect } from "react";
 
 export default function Task({ task }) {
   const [isEditing, setIsEditing] = useState(false);
-  console.log(isEditing);
 
   const editTask = () => {
-    console.log(isEditing);
     setIsEditing(true);
   }
 
   const submitFormData = (editedTask) => {
     setIsEditing(false);
   }
-
-  useEffect(() => {
-
-  }, [task])
 
   return (
     <>

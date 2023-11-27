@@ -1,8 +1,7 @@
 import React from 'react';
 import { List, ListItem, Typography, Divider, Grid, Box } from '@mui/material';
 import Task from './task';
-import TaskForm from './taskForm';
-import { WrapText } from "@mui/icons-material";
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import IconButton from "@mui/material/IconButton";
 
 
@@ -15,7 +14,7 @@ const TaskList = ({ taskListData }) => {
             {taskListData.title}
           </Typography>
           <IconButton color="primary">
-            <WrapText></WrapText>
+            <MoreHorizIcon></MoreHorizIcon>
           </IconButton>
         </div>
       </div>

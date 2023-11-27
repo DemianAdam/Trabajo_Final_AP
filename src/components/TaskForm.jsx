@@ -15,7 +15,7 @@ const formFieldConfig = {
   label: { label: "Etiqueta", type: "select", options: ["#F8BD1C", "#FF3838", "#F8F8F8"] },
 }
 
-export default function TaskForm({ data, submitFormData }) {
+export default function TaskForm({ data, submitFormData, cancelForm }) {
   const [formData, setFormData] = useState(data);
 
   const updateFormData = (e) => {
@@ -135,6 +135,7 @@ export default function TaskForm({ data, submitFormData }) {
           color="error"
           size="small"
           className="rounded-[5px]"
+          onClick={cancelForm}
         >
           Cancelar
         </Button>
