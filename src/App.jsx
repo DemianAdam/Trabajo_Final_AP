@@ -134,15 +134,18 @@ function App() {
   }
 
   const addTaskList = (newData) => {
-    const newTaskList = { ...newData, id: data.length, tasks: [] };
+    //const id = Math.max(data.map((item) => item.id)) + 1;
+    const newTaskList = { ...newData, id: count, tasks: [] };
+
     setData([...data, newTaskList]);
     setIsCreatingTaskList(false)
-    setCount(1);
+    setCount(count + 1);
     // localStorage.setItem('data', JSON.stringify([...data, newTaskList]));
   };
 
   const removeTaskList = (id) => {
     setData(data.filter((item) => item.id !== id));
+    //localStorage.setItem('data', JSON.stringify(data.filter((item) => item.id !== id)));
   }
 
   const updateTasksList = (updatedTaskList) => {
@@ -171,7 +174,7 @@ function App() {
   }, [count, data]);
 
 
-
+console.log(data);
   return (
     <OverlayScrollbarsComponent className="h-screen p-10">
       <div className='flex flex-row'>
