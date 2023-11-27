@@ -149,7 +149,6 @@ function App() {
 
   const updateTasksList = (updatedTaskList) => {
     const updatedData = data.map((item) => {
-      console.log(item)
       return item.id === updatedTaskList.id ? updatedTaskList : item
     }
     );
@@ -174,7 +173,6 @@ function App() {
   }, [count, data]);
 
 
-console.log(data);
   return (
     <OverlayScrollbarsComponent  options={{ scrollbars: { theme: "os-theme-light" } }} className="h-screen p-10">
       <div className='flex flex-row'>

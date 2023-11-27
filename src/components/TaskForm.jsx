@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Box, Button, InputBase, InputLabel, Stack, Select, MenuItem } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from "@mui/material/IconButton";
+import { useSnackbar } from 'notistack';
 
 const dataExample = {
   id: 0,
@@ -19,6 +20,7 @@ const formFieldConfig = {
 
 export default function TaskForm({ data, submitFormData, cancelForm, submitText = 'Añadir', deleteForm, isEditingForm = false }) {
   const [formData, setFormData] = useState(data);
+  const { enqueueSnackbar } = useSnackbar();
 
   const updateFormData = (e) => {
     const { name, value } = e.target;
@@ -30,7 +32,17 @@ export default function TaskForm({ data, submitFormData, cancelForm, submitText 
 
   const submitForm = (e) => {
     e.preventDefault();
-    submitFormData(formData);
+    const { name, value } = e.target;
+    console.log(formData);
+
+    if(formData.body === "" || formData.title === "")
+    {
+      enqueueSnackbar('Hay campos sin completar', { variant: 'error' });
+    }
+    else{
+      submitFormData(formData);
+    }
+
   };
 
   const renderFormField = (key, field, value, updateFormData) => {
