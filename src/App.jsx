@@ -124,7 +124,7 @@ const taskListexample = [
 function App() {
   const [data, setData] = useState([
     {
-      id: "0",
+      id: 0,
       title: "Titulo 1",
       tasks: [
         {
@@ -136,6 +136,7 @@ function App() {
       ],
     }
   ]);
+
   const [isCreatingTaskList, setIsCreatingTaskList] = useState(false);
   const [isEditingTaskList, setIsEditingTaskList] = useState(false);
 
@@ -144,9 +145,8 @@ function App() {
   }
 
   const addTaskList = (newData) => {
-    newData.id = data.length + 1;
-    newData.tasks = [];
-    setData([...data, newData]);
+    const newTaskList = { ...newData, id: data.length , tasks: []};
+    setData([...data, newTaskList]);
     setIsCreatingTaskList(false)
   };
 
@@ -158,6 +158,14 @@ function App() {
     setData(data.map((item) => item.id === editedData.id ? editedData : null));
   }
 
+  const updateTasksList = (updatedTaskList) => {
+    const updatedData = data.map((item) =>{
+      return item.id === updatedTaskList.id ? updatedTaskList : item
+    }
+    );
+    setData(updatedData);
+  };
+
   return (
     <OverlayScrollbarsComponent className="h-screen p-10">
       <div className='flex flex-row'>
@@ -165,11 +173,10 @@ function App() {
           {
             data.map((taskList) => (
               <Grid item xs={1} sm={6} md={4} lg={3} key={taskList.id}>
-                <TaskList taskListData={taskList} />
+                <TaskList taskListData={taskList} updateTasksList={updateTasksList} />
               </Grid>
             ))
           }
-
         </div>
         <div>
           {

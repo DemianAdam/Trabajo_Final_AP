@@ -1,11 +1,24 @@
-import React from 'react';
 import { List, ListItem, Typography, Divider, Grid, Box } from '@mui/material';
 import Task from './task';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import IconButton from "@mui/material/IconButton";
+import TaskForm from './taskForm';
 
+const TaskList = ({ taskListData, updateTasksList }) => {
 
-const TaskList = ({ taskListData }) => {
+  const taskConfig = {
+    id: 0,
+    title: "",
+    body: "",
+    label: "#F8BD1C",
+  }
+
+  const addTask = (task) => {
+    const newTask = { ...task, id: taskListData.tasks.length };
+    const newTasks = {...taskListData, tasks : [...taskListData.tasks, newTask]};
+    updateTasksList(newTasks);
+  }
+
   return (
     <div className='pr-4'>
       <div className='pb-4'>
@@ -19,11 +32,15 @@ const TaskList = ({ taskListData }) => {
         </div>
       </div>
       <div >
-        {taskListData.tasks.map((task) => (
-          <Grid key={task.id} className='pb-4'>
-            <Task task={task} />
-          </Grid>
-        ))}
+        {
+          taskListData.tasks.map((task) => (
+            <Grid key={task.id} className='pb-4'>
+              <Task task={task} />
+            </Grid>
+          ))}
+      </div>
+      <div>
+        {<TaskForm data={taskConfig} submitFormData={addTask} />}
       </div>
     </div>
   );

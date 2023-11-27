@@ -64,7 +64,6 @@ export default function TaskForm({ data, submitFormData, cancelForm }) {
           </>
         );
       case "textarea":
-        console.log(value)
         return (
           <>
             <InputLabel
@@ -92,10 +91,29 @@ export default function TaskForm({ data, submitFormData, cancelForm }) {
             name={key}
             value={value}
             onChange={updateFormData}
+            className="h-[30px] rounded-[5px] border border-white border-opacity-20 bg-zinc-900 bg-opacity-50 px-3 text-[13px] font-light leading-[19px] text-inherit"
+            sx={{
+              "& .MuiListItem-root": {
+                backgroundColor: 'rgba(24, 24, 27, 0.5)', // Adjust this to match your desired background color
+              },
+            }}
           >
             {field.options.map((option) => (
-              <MenuItem key={option} value={option}>
-                {option}
+              <MenuItem
+                key={option}
+                value={option}
+                className="bg-zinc-900" 
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="60"
+                  height="8"
+                  viewBox="0 0 60 8"
+                  fill="none"
+                  className="my-2"
+                >
+                  <rect width="60" height="8" rx="4" fill={option} />
+                </svg>
               </MenuItem>
             ))}
           </Select>
