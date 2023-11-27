@@ -120,31 +120,7 @@ function App() {
           title: "momo",
           body: "qui dolorem ipsum, quia dolor sit amet consectetur adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem",
           label: "#F8BD1C",
-        },
-        {
-          id: 1,
-          title: "momo",
-          body: "qui dolorem ipsum, quia dolor sit amet consectetur adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem",
-          label: "#F8BD1C",
-        },
-      ],
-    },
-    {
-      id: "1",
-      title: "finalizado",
-      tasks: [
-        {
-          id: 0,
-          title: "momo",
-          body: "qui dolorem ipsum, quia dolor sit amet consectetur adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem",
-          label: "#F8BD1C",
-        },
-        {
-          id: 1,
-          title: "momo",
-          body: "qui dolorem ipsum, quia dolor sit amet consectetur adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem",
-          label: "#F8BD1C",
-        },
+        }
       ],
     }
   ]
@@ -153,7 +129,7 @@ function App() {
     <OverlayScrollbarsComponent className="h-screen p-10">
       <div className='flex'>
         {
-          tasksList.map((taskList) => (
+          taskListexample.map((taskList) => (
             <Grid item xs={1} sm={6} md={4} lg={3} key={taskList.id}>
               <TaskList taskListData={taskList} />
             </Grid>

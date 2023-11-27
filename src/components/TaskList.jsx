@@ -1,6 +1,6 @@
 import React from 'react';
 import { List, ListItem, Typography, Divider, Grid, Box } from '@mui/material';
-import TaskComponent from './task';
+import Task from './task';
 import TaskForm from './taskForm';
 import { WrapText } from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
@@ -22,11 +22,10 @@ const TaskList = ({ taskListData }) => {
       <div >
         {taskListData.tasks.map((task) => (
           <Grid key={task.id} className='pb-4'>
-            <TaskComponent task={task} />
+            <Task task={task} />
           </Grid>
         ))}
       </div>
-      <TaskForm />
     </div>
   );
 };
