@@ -14,6 +14,9 @@ const theme = createTheme({
   typography: {
     fontFamily: "'Poppins', sans-serif",
   },
+  palette:{
+    mode:"dark"
+  },
   components: {
     MuiButton: {
       styleOverrides: {

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Box, Button, InputBase, InputLabel, Stack, Select, MenuItem } from "@mui/material";
+import { styled } from '@mui/material/styles';
+
 
 const dataExample = {
   id: 0,
@@ -87,21 +89,23 @@ export default function TaskForm({ data, submitFormData, cancelForm, submitText 
       case "select":
         return (
           <Select
+            native={false}
             id={key}
             name={key}
             value={value}
             onChange={updateFormData}
             className="h-[30px] rounded-[5px] border border-white border-opacity-20 bg-zinc-900 bg-opacity-50 px-3 text-[13px] font-light leading-[19px] text-inherit"
             sx={{
-              "& .MuiListItem-root": {
-                backgroundColor: 'rgba(24, 24, 27, 0.5)', // Adjust this to match your desired background color
-              },
+              '&:focus': {
+                borderColor: 'red',
+              }
             }}
           >
             {field.options.map((option) => (
               <MenuItem
                 key={option}
                 value={option}
+                classes={{ root: 'bg-zinc-900' }}
                 className="bg-zinc-900"
               >
                 <svg
@@ -143,7 +147,7 @@ export default function TaskForm({ data, submitFormData, cancelForm, submitText 
           variant="contained"
           disableElevation
           size="small"
-          className="rounded-[5px] bg-blue-600"
+          className="rounded-[5px] bg-blue-600 text-white"
           type="submit"
         >
           {submitText}

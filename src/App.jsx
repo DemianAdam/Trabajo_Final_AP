@@ -8,13 +8,13 @@ import TaskForm from './components/taskForm';
 import { useEffect, useState } from "react";
 import { SnackbarProvider, useSnackbar } from 'notistack';
 
-const task = {
+/*const task = {
   title: "momo",
   body: "qui dolorem ipsum, quia dolor sit amet consectetur adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem",
   label: "#F8BD1C",
-}
+}*/
 
-const tasksList = [
+/*const tasksList = [
   {
     id: "0",
     title: "Titulo 1",
@@ -120,24 +120,12 @@ const taskListexample = [
       }
     ],
   }
-]
+]*/
 
 function App() {
   const [count, setCount] = useState(0);
-  const [data, setData] = useState([
-    {
-      id: 0,
-      title: "Titulo 1",
-      tasks: [
-        {
-          id: 0,
-          title: "momo",
-          body: "qui dolorem ipsum, quia dolor sit amet consectetur adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem",
-          label: "#F8BD1C",
-        }
-      ],
-    }
-  ]);
+  const [data, setData] = useState([]);
+
   const [isCreatingTaskList, setIsCreatingTaskList] = useState(false);
   const [isEditingTaskList, setIsEditingTaskList] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
@@ -151,6 +139,7 @@ function App() {
     setData([...data, newTaskList]);
     setIsCreatingTaskList(false)
     setCount(1);
+    // localStorage.setItem('data', JSON.stringify([...data, newTaskList]));
   };
 
   const removeTaskList = (id) => {
@@ -167,50 +156,68 @@ function App() {
     }
     );
     setData(updatedData);
+    localStorage.setItem('data', JSON.stringify(updatedData));
   };
+
 
   useEffect(() => {
     if (count) {
-      //localStorage.setItem('data', JSON.stringify(data)); me lo hizo copilot despues vemos si funca xddddd
       enqueueSnackbar('Lista creada', { variant: 'success' });
     }
-  }, [count, data.length]);
+    else {
+      setData(JSON.parse(localStorage.getItem('data')) || []);
+    }
+  }, [count]);
+
+
+  useEffect(() => {
+    if (count) {
+      localStorage.setItem('data', JSON.stringify(data));
+    }
+  }, [count, data]);
+
 
 
   return (
     <OverlayScrollbarsComponent className="h-screen p-10">
-      
-        <div className='flex flex-row'>
-          <div className='flex'>
-            {
-              data.map((taskList) => (
-                <Grid item xs={1} sm={6} md={4} lg={3} key={taskList.id}>
-                  <TaskList taskListData={taskList} updateTasksList={updateTasksList} />
-                </Grid>
-              ))
-            }
-          </div>
-          <div>
-            {
-              isCreatingTaskList ? (
-                <TaskForm
-                  data={taskListConfig}
-                  submitFormData={addTaskList}
-                  cancelForm={() => setIsCreatingTaskList(false)}
-                />
-              ) : (
-                <div className="flex w-[22.625rem] items-center justify-between rounded-lg border border-white/20 bg-[#18191B80]/50 pb-1 pl-4 pr-3 pt-1 text-white">
-                  <Typography className="py-1 font-semibold">
-                    Añadir una lista
-                  </Typography>
-                  <IconButton color="primary" onClick={() => setIsCreatingTaskList(true)}>
-                    <AddIcon></AddIcon>
-                  </IconButton>
-                </div>
-              )
-            }
-          </div>
+
+      <div className='flex flex-row'>
+        {
+          data ? (
+            <div className='flex'>
+              {
+                data.map((taskList) => (
+                  <Grid item xs={1} sm={6} md={4} lg={3} key={taskList.id}>
+                    <TaskList taskListData={taskList} updateTasksList={updateTasksList} />
+                  </Grid>
+                ))
+              }
+            </div>
+          ) : (
+            <div></div>
+          )
+        }
+        <div>
+          {
+            isCreatingTaskList ? (
+              <TaskForm
+                data={taskListConfig}
+                submitFormData={addTaskList}
+                cancelForm={() => setIsCreatingTaskList(false)}
+              />
+            ) : (
+              <div className="flex w-[22.625rem] items-center justify-between rounded-lg border border-white/20 bg-[#18191B80]/50 pb-1 pl-4 pr-3 pt-1 text-white">
+                <Typography className="py-1 font-semibold">
+                  Añadir una lista
+                </Typography>
+                <IconButton color="primary" onClick={() => setIsCreatingTaskList(true)}>
+                  <AddIcon></AddIcon>
+                </IconButton>
+              </div>
+            )
+          }
         </div>
+      </div>
     </OverlayScrollbarsComponent>
   );
 }
