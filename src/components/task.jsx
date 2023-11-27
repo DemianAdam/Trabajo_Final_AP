@@ -1,22 +1,19 @@
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import { WrapText } from "@mui/icons-material";
+import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import TaskForm from './taskForm';
 import { useState, useEffect } from "react";
 
-export default function Task({ task, updateTask }) {
+export default function Task({ task, updateTask, deleteTask }) {
   const [isEditing, setIsEditing] = useState(false);
-
-  const editTask = () => {
-    setIsEditing(true);
-  }
 
   const submitFormData = (editedTask) => {
     updateTask(editedTask);
     setIsEditing(false);
   }
+
 
 
   return (
@@ -27,6 +24,8 @@ export default function Task({ task, updateTask }) {
             data={task}
             submitFormData={submitFormData}
             cancelForm={() => setIsEditing(false)}
+            isEditingForm={true}
+            deleteForm={() => { deleteTask(task.id); setIsEditing(false) }}
             submitText='Guardar'
           />
         ) : (
@@ -43,14 +42,16 @@ export default function Task({ task, updateTask }) {
                 >
                   <rect width="60" height="8" rx="4" fill={task.label} />
                 </svg>
-                <IconButton color="primary" onClick={editTask}>
-                  <WrapText ></WrapText>
+                <IconButton color="primary" onClick={() => setIsEditing(true)}>
+                  <MoreHorizIcon ></MoreHorizIcon>
                 </IconButton>
               </div>
-              <Typography variant="h5" className="pb-2">
+              <Typography className="py-1 font-semibold truncate">
                 {task.title}
               </Typography>
-              <Typography>{task.body}</Typography>
+              <OverlayScrollbarsComponent options={{ scrollbars: { theme: "os-theme-light" } }} className="break-words max-h-[10rem] min-h-[5rem] overflow-auto">
+                <Typography className="pr-2" >{task.body}</Typography>
+              </OverlayScrollbarsComponent>
             </CardContent>
           </div>
         )

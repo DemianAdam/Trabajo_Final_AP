@@ -142,7 +142,7 @@ export default function TaskForm({ data, submitFormData, cancelForm, submitText 
               variant="contained"
               disableElevation
               size="small"
-              className="rounded-[5px] bg-blue-600 text-white"
+              className="rounded-[5px] bg-blue-600 text-white mr-3"
               type="submit"
             >
               {submitText}

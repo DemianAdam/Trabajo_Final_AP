@@ -34,6 +34,12 @@ const TaskList = ({ taskListData, updateTasksList, removeTaskList }) => {
     enqueueSnackbar('Tarea actualizada', { variant: 'info' });
   }
 
+  const deleteTask = (taskId) => {
+    const newTasks = { ...taskListData, tasks: taskListData.tasks.filter(task => task.id !== taskId) };
+    updateTasksList(newTasks);
+    enqueueSnackbar('Tarea eliminada', { variant: 'error' });
+  }
+
   const editTaskList = (taskList) => {
     const newTaskList = { ...taskListData, title: taskList.title };
     updateTasksList(newTaskList);
@@ -58,7 +64,7 @@ const TaskList = ({ taskListData, updateTasksList, removeTaskList }) => {
             submitText='Guardar'
             cancelForm={() => setIsEditingTaskList(false)}
             isEditingForm={"true"}
-            deleteForm={deleteTaskList}/>
+            deleteForm={deleteTaskList} />
         </div>
       ) : (
         <div className='pb-4'>
@@ -77,7 +83,7 @@ const TaskList = ({ taskListData, updateTasksList, removeTaskList }) => {
         {
           taskListData.tasks.map((task) => (
             <Grid key={task.id} className='pb-4'>
-              <Task task={task} updateTask={updateTask} />
+              <Task task={task} updateTask={updateTask} deleteTask={deleteTask} />
             </Grid>
           ))}
       </div>
