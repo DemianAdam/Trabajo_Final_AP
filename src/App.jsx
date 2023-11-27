@@ -125,7 +125,6 @@ const taskListexample = [
 function App() {
   const [count, setCount] = useState(0);
   const [data, setData] = useState([]);
-
   const [isCreatingTaskList, setIsCreatingTaskList] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
 
@@ -140,18 +139,19 @@ function App() {
     setData([...data, newTaskList]);
     setIsCreatingTaskList(false)
     setCount(count + 1);
-    // localStorage.setItem('data', JSON.stringify([...data, newTaskList]));
+     localStorage.setItem('data', JSON.stringify([...data, newTaskList]));
   };
 
   const removeTaskList = (id) => {
-    setData(data.filter((item) => item.id !== id));
+    const updatedData = data.filter((item) => item.id !== id);
+    setData(updatedData);
+    localStorage.setItem('data', JSON.stringify(updatedData));
   }
 
   const updateTasksList = (updatedTaskList) => {
     const updatedData = data.map((item) => {
       return item.id === updatedTaskList.id ? updatedTaskList : item
-    }
-    );
+    });
     setData(updatedData);
     localStorage.setItem('data', JSON.stringify(updatedData));
   };
@@ -174,10 +174,10 @@ function App() {
 
 
   return (
-    <OverlayScrollbarsComponent  options={{ scrollbars: { theme: "os-theme-light" } }} className="h-screen p-10">
+    <OverlayScrollbarsComponent options={{ scrollbars: { theme: "os-theme-light" } }} className="h-screen p-10">
       <div className='flex flex-row'>
         {
-          data ? (
+          data && (
             <div className='flex'>
               {
                 data.map((taskList) => (
@@ -187,8 +187,6 @@ function App() {
                 ))
               }
             </div>
-          ) : (
-            <div></div>
           )
         }
         <div>

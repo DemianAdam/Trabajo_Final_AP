@@ -14,8 +14,6 @@ export default function Task({ task, updateTask, deleteTask }) {
     setIsEditing(false);
   }
 
-
-
   return (
     <>
       {
