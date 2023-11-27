@@ -7,6 +7,8 @@ import {
   ThemeProvider,
   createTheme,
 } from "@mui/material";
+import { SnackbarProvider, closeSnackbar } from 'notistack';
+
 
 const theme = createTheme({
   typography: {
@@ -27,7 +29,21 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
-        <App />
+        <SnackbarProvider
+          autoHideDuration={2000}
+          maxSnack={3}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          action={(snackbarId) => (
+            <button onClick={() => closeSnackbar(snackbarId)}>
+              Cerrar
+            </button>
+          )}
+        >
+          <App />
+        </SnackbarProvider>
       </ThemeProvider>
     </StyledEngineProvider>
   </React.StrictMode>,

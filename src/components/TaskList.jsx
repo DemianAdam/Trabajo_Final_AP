@@ -5,9 +5,11 @@ import IconButton from "@mui/material/IconButton";
 import TaskForm from './taskForm';
 import { useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
+import { useSnackbar } from 'notistack';
 
 const TaskList = ({ taskListData, updateTasksList }) => {
   const [isCreatingTask, setIsCreatingTask] = useState(false);
+  const {enqueueSnackbar} = useSnackbar();
 
   const taskConfig = {
     id: 0,
@@ -21,12 +23,14 @@ const TaskList = ({ taskListData, updateTasksList }) => {
     const newTasks = { ...taskListData, tasks: [...taskListData.tasks, newTask] };
     updateTasksList(newTasks);
     setIsCreatingTask(false)
+    enqueueSnackbar('Tarea creada', { variant: 'success' });
   }
 
   const updateTask = (task) => {
     taskListData.tasks[task.id] = task;
     const newTasks = { ...taskListData, tasks: [...taskListData.tasks] };
     updateTasksList(newTasks);
+    enqueueSnackbar('Tarea actualizada', { variant: 'info' });
   }
 
   return (
