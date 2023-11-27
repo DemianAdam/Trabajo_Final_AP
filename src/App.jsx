@@ -5,7 +5,8 @@ import IconButton from "@mui/material/IconButton";
 import AddIcon from '@mui/icons-material/Add';
 import TaskList from "./components/taskList";
 import TaskForm from './components/taskForm';
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { SnackbarProvider, useSnackbar } from 'notistack';
 
 const task = {
   title: "momo",
@@ -122,6 +123,7 @@ const taskListexample = [
 ]
 
 function App() {
+  const [count, setCount] = useState(0);
   const [data, setData] = useState([
     {
       id: 0,
@@ -136,18 +138,19 @@ function App() {
       ],
     }
   ]);
-
   const [isCreatingTaskList, setIsCreatingTaskList] = useState(false);
   const [isEditingTaskList, setIsEditingTaskList] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   const taskListConfig = {
     title: ""
   }
 
   const addTaskList = (newData) => {
-    const newTaskList = { ...newData, id: data.length , tasks: []};
+    const newTaskList = { ...newData, id: data.length, tasks: [] };
     setData([...data, newTaskList]);
     setIsCreatingTaskList(false)
+    setCount(1);
   };
 
   const removeTaskList = (id) => {
@@ -159,47 +162,55 @@ function App() {
   }
 
   const updateTasksList = (updatedTaskList) => {
-    const updatedData = data.map((item) =>{
+    const updatedData = data.map((item) => {
       return item.id === updatedTaskList.id ? updatedTaskList : item
     }
     );
     setData(updatedData);
-    console.log(updatedData);
   };
+
+  useEffect(() => {
+    if (count) {
+      //localStorage.setItem('data', JSON.stringify(data)); me lo hizo copilot despues vemos si funca xddddd
+      enqueueSnackbar('Lista creada', { variant: 'success' });
+    }
+  }, [count, data.length]);
+
 
   return (
     <OverlayScrollbarsComponent className="h-screen p-10">
-      <div className='flex flex-row'>
-        <div className='flex'>
-          {
-            data.map((taskList) => (
-              <Grid item xs={1} sm={6} md={4} lg={3} key={taskList.id}>
-                <TaskList taskListData={taskList} updateTasksList={updateTasksList} />
-              </Grid>
-            ))
-          }
+      
+        <div className='flex flex-row'>
+          <div className='flex'>
+            {
+              data.map((taskList) => (
+                <Grid item xs={1} sm={6} md={4} lg={3} key={taskList.id}>
+                  <TaskList taskListData={taskList} updateTasksList={updateTasksList} />
+                </Grid>
+              ))
+            }
+          </div>
+          <div>
+            {
+              isCreatingTaskList ? (
+                <TaskForm
+                  data={taskListConfig}
+                  submitFormData={addTaskList}
+                  cancelForm={() => setIsCreatingTaskList(false)}
+                />
+              ) : (
+                <div className="flex w-[22.625rem] items-center justify-between rounded-lg border border-white/20 bg-[#18191B80]/50 pb-1 pl-4 pr-3 pt-1 text-white">
+                  <Typography className="py-1 font-semibold">
+                    Añadir una lista
+                  </Typography>
+                  <IconButton color="primary" onClick={() => setIsCreatingTaskList(true)}>
+                    <AddIcon></AddIcon>
+                  </IconButton>
+                </div>
+              )
+            }
+          </div>
         </div>
-        <div>
-          {
-            isCreatingTaskList ? (
-              <TaskForm
-                data={taskListConfig}
-                submitFormData={addTaskList}
-                cancelForm={() => setIsCreatingTaskList(false)}
-              />
-            ) : (
-              <div className="flex w-[22.625rem] items-center justify-between rounded-lg border border-white/20 bg-[#18191B80]/50 pb-1 pl-4 pr-3 pt-1 text-white">
-                <Typography className="py-1 font-semibold">
-                  Añadir una lista
-                </Typography>
-                <IconButton color="primary" onClick={() => setIsCreatingTaskList(true)}>
-                  <AddIcon></AddIcon>
-                </IconButton>
-              </div>
-            )
-          }
-        </div>
-      </div>
     </OverlayScrollbarsComponent>
   );
 }
